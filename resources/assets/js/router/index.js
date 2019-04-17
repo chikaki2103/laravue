@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import FormMail from '@/components/FormMail.vue';
+import SuccessMail from '@/components/SuccessMail.vue';
+
 // Containers
 import Full from '@/containers/Full'
 
@@ -171,6 +174,17 @@ export default new Router({
             auth: false
         }
     },
+     {
+      name: 'FormMail',
+      path: '/email/form',
+      component: FormMail
+  },
+  {
+      name:'SuccessMail',
+      path:'/email/success',
+      component: SuccessMail
+  }
+
   ]
 })
 

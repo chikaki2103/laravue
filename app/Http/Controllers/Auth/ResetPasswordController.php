@@ -7,6 +7,10 @@ use App\Notifications\PasswordResetRequest;
 use App\Notifications\PasswordResetSuccess;
 use App\User;
 use App\PasswordReset;
+use App\Mail\SendMailable;
+use Mail;
+use Illuminate\Notifications\Messages\MailMessage;
+
 class ResetPasswordController extends Controller
 {
     /**
@@ -36,8 +40,14 @@ class ResetPasswordController extends Controller
             $user->notify(
                 new PasswordResetRequest($passwordReset->token)
             );
+
+        $email = $request->email; 
+        // $sendmail = new PasswordResetRequest($order)
+        //   Mail::send('mailfb', array('email'=>$email, 'content'=>'aaa'), function($message){
+        //     $message->to('taidang21033@gmail.com', 'Visitor')->subject('Visitor Feedback!');
+        // });
         return response()->json([
-            'message' => 'We have e-mailed your password reset link!'
+            'message' => 'We have e-mailed your password reset link!','email'=>$email
         ]);
     }
     /**
