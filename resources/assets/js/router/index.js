@@ -25,7 +25,8 @@ import SimpleLineIcons from '@/views/icons/SimpleLineIcons'
 // Views - Pages
 import Page404 from '@/views/pages/Page404'
 import Page500 from '@/views/pages/Page500'
-import Login from '@/views/pages/Login'
+import Login from '@/containers/Login'
+import resetpassword from '@/containers/ResetPassword'
 import Register from '@/views/pages/Register'
 
 Vue.use(Router)
@@ -39,6 +40,7 @@ export default new Router({
       path: '/',
       redirect: '/dashboard',
       name: 'Home',
+      meta: {auth: true},
       component: Full,
       children: [
         {
@@ -152,6 +154,23 @@ export default new Router({
           component: Register
         }
       ]
-    }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
+       meta: {
+            auth: false
+        }
+    },
+     {
+      path: '/resetpassword',
+      name: 'resetpassword',
+      component: resetpassword,
+       meta: {
+            auth: false
+        }
+    },
   ]
 })
+

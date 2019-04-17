@@ -22,4 +22,12 @@ Route::group(['middleware' => 'jwt.refresh'], function(){
   Route::get('auth/refresh', 'AuthController@refresh');
 });
 
-  
+ Route::group([    
+    'namespace' => 'Auth',    
+    'middleware' => 'api',    
+    'prefix' => 'password'
+], function () {    
+    Route::post('create', 'ResetPasswordController@create');
+    Route::get('find/{token}', 'ResetPasswordController@find');
+    Route::post('reset', 'ResetPasswordController@reset');
+});
