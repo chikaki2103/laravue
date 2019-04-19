@@ -25,7 +25,7 @@
                 </p>
                 <div class="row">
                   <div class="col-6">
-                    <button type="submit" class="btn btn-primary px-4">Reset Now!</button>
+                    <button v-on:click="block" type="submit" class="btn btn-primary px-4">Reset Now!</button>
                   </div>
                  
                 </div>
@@ -36,7 +36,7 @@
             <div class="card-body text-center">
               <div>
               
-                <h3><i class="fa fa-check fa-lg mt-4 text-success"></i> <span class="text-success">Please Check Your Email !!</span></h3>
+                <h3 v-bind:style="{ display: activedisplay }"><i class="fa fa-check fa-lg mt-4 text-success"></i> <span class="text-success">Please Check Your Email !!</span></h3>
 
               </div>
             </div>
@@ -54,7 +54,8 @@ export default {
     data: function() {
     return {    
       email: null,
-      errors: []
+      errors: [],
+      activedisplay: 'none'
     };
   },
   methods: {
@@ -79,12 +80,18 @@ export default {
     reset() {
     axios.post('/password/create', {email: this.email})
                .then(response => {
-                   console.log(response.data.result)
+                   console.log(response.data.token)
                })
                .catch(error => {
                    console.log(error)
                })
     },
+
+    
+    block(){
+      this.activedisplay = 'block';
+    }
   }
+
 }
 </script>

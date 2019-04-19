@@ -27,7 +27,7 @@
     },
     "dependencies": {
         "@websanova/vue-auth": "^2.21.14-beta",
-        "bootstrap-vue": "0.20.1",
+        "bootstrap-vue": "^2.0.0-rc.18",
         "chart.js": "2.6.0",
         "font-awesome": "^4.7.0",
         "simple-line-icons": "^2.4.1",

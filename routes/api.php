@@ -31,3 +31,7 @@ Route::group(['middleware' => 'jwt.refresh'], function(){
     Route::get('find/{token}', 'ResetPasswordController@find');
     Route::post('reset', 'ResetPasswordController@reset');
 });
+ //crud role
+Route::group(['prefix' => '/role', 'namespace' => 'Crud', 'as' => 'api.'], function () {
+    Route::resource('roles', 'RoleComtroller', ['except' => ['create', 'edit']]);
+});

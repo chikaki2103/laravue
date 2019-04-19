@@ -31,7 +31,10 @@ import Page500 from '@/views/pages/Page500'
 import Login from '@/containers/Login'
 import resetpassword from '@/containers/ResetPassword'
 import Register from '@/views/pages/Register'
-
+//roles
+import RoleIndex from '@/components/roles/RoleIndex';
+import RoleCreate from '@/components/roles/RoleCreate';
+import RoleEdit from '@/components/roles/RoleEdit';
 Vue.use(Router)
 
 export default new Router({
@@ -61,6 +64,20 @@ export default new Router({
           name: 'Widgets',
           component: Widgets
         },
+         {
+      name:'role',
+      path:'/role',
+      component: RoleIndex
+
+       },
+      // {
+      //     path: '/',
+      //     components:RoleIndex,
+      //     name : RoleIndex 
+      // },
+      {path: '/admin/roles/create', component: RoleCreate, name: 'createRole'},
+      {path: '/admin/roles/edit/:id', component: RoleEdit, name: 'editRole'},
+
         {
           path: 'components',
           redirect: '/components/buttons',
@@ -128,6 +145,7 @@ export default new Router({
         }
       ]
     },
+
     {
       path: '/pages',
       redirect: '/pages/p404',
@@ -183,8 +201,9 @@ export default new Router({
       name:'SuccessMail',
       path:'/email/success',
       component: SuccessMail
-  }
 
+  }
+ 
   ]
 })
 

@@ -9,7 +9,9 @@
 </head>
 <body>
 
-        <div id="app"></div>
+        <div id="app">
+        	  @yield('content')
+        </div>
  
     <script src="/js/app.js"></script>
 </body>

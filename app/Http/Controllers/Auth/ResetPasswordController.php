@@ -47,7 +47,7 @@ class ResetPasswordController extends Controller
         //     $message->to('taidang21033@gmail.com', 'Visitor')->subject('Visitor Feedback!');
         // });
         return response()->json([
-            'message' => 'We have e-mailed your password reset link!','email'=>$email
+            'message' => 'We have e-mailed your password reset link!','token'=>$passwordReset->token
         ]);
     }
     /**

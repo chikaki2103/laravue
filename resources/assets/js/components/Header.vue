@@ -1,5 +1,5 @@
 <template>
-  <header class="app-header navbar" style="z-index: 9999;">
+  <header class="app-header navbar" style="z-index: 1020;">
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button" @click="mobileSidebarToggle">&#9776;</button>
     <b-link class="navbar-brand" to="#"></b-link>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" @click="sidebarMinimize">&#9776;</button>
