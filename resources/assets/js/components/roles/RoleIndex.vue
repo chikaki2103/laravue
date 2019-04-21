@@ -68,7 +68,7 @@
       @ok="handleOkEdit"
       @shown="clearName"
     >
-      <form @submit.stop.prevent="handleSubmitEdit">
+      <form @submit.stop.prevent="handleSubmitEdit" @focus.native="handleSubmitEdit()">
         <b-form-input v-model="editRole.name" placeholder="Enter your name"></b-form-input>
          <b-form-input v-model="editRole.display_name" placeholder="Enter your dis play"></b-form-input>
       </form>
@@ -80,14 +80,14 @@
     export default {
         data: function () {
             return {
+
                 roles: [],
                  role: {
                     name: '',
                     display_name: '',
                 },
                 editRole :{
-                   name: '',
-                    display_name: '',
+                  
                 }
             }
         },
@@ -171,6 +171,7 @@
                     }
                   },  
             edit(id, index){
+                
 
                let app = this;
           
@@ -178,31 +179,39 @@
             axios.get('/role/roles/' + id)
                 .then(function (resp) {
                     app.editRole = resp.data;
+
                 })
                 .catch(function () {
                     alert("Could not load your editRole")
                 });
             } ,
           handleSubmitEdit(){
+
                   event.preventDefault();
-              console.log(this.$refs.myModal);
+              // console.log(this.$refs.myModal);
+             console.log(this.$refs['myModal'].hide());
+            this.$refs['myModal'].hide();
                 var newRole = this.editRole;
                
                 axios.patch('/role/roles/' + this.roleId, newRole)
 
-                    .then(function (response) {
-                    // this.$refs.myModal.hide()
-                        
-                      
-                       // Vue.set(this.roles, 'name', this.role.name)
-                       //  Vue.set(this.roles, 'display_name', this.role.display_name)
+                  .then(response => {
 
-                         // this.getVueItems();
-                    })
-
-                    .catch(function (resp) {
-                        console.log(resp);
-                    });
+                this.$refs.myModal.hide()
+                console.log(response.data.id);
+                 // console.log(this.getVueItems());
+                this.getVueItems();
+                })
+                .catch(error => {
+                   if (error.response) {
+                     if (error.response.status) {
+                        console.log('DUPLICATE NAME')
+                     }
+                   
+                   
+                    } 
+                
+                });
           }
         }
     }
