@@ -36,8 +36,30 @@ class RoleComtroller extends Controller
      */
     public function store(Request $request)
     {
-        $company = Role::create($request->all());
-        return $company;
+        
+          
+            try {
+            $old_role = Role::where('name' , $request->name)->where('display_name' , $request->display_name)->first();
+           $role = new Role;
+           $role->name = $request->name;
+           $role->display_name = $request->display_name;
+              $role->save();
+              
+             
+
+            } catch (Exception $e) {
+            return response()->json(['error'=>$e->errors()],500);
+              
+                    
+            }
+           // if(isset($old_role->name)){
+           //       return response()->json(['message'=>'trung old name'],500);
+           // }
+           // if(isset($old_role->display_name)){
+           //       return response()->json(['message'=>'trung display name'],500);
+           // }
+         
+           
     }
 
     /**
@@ -71,10 +93,13 @@ class RoleComtroller extends Controller
      */
     public function update(Request $request, $id)
     {
-         $role = Role::findOrFail($id);
-        $role->update($request->all());
-
-        return $role;
+        // dd($request->all());
+        //  $role = Role::findOrFail($id);
+        // $role->update($request->all());
+        $role = Role::find($id);
+        $role->name = $request->name;
+        $role->display_name = $request->display_name;
+        $role->save();
     }
 
     /**

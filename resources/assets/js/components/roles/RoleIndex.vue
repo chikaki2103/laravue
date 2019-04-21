@@ -15,21 +15,26 @@
                     <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Power</th> 
+                        <th>Display Name</th> 
                         <th>Created At</th> 
 
-                        <th width="100">&nbsp;</th>
+                        <th width="150">&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="role, index in roles">
                         <td>{{ role.name }}</td>
-                        <td>{{ role.power }}</td>
+                        <td>{{ role.display_name }}</td>
                         <td>{{ role.created_at }}</td>
                         <td>
-                            <router-link :to="{name: 'editRole', params: {id: role.id}}" class="btn btn-info">
+                           <!--  <router-link :to="{name: 'editRole', params: {id: role.id}}" class="btn btn-info">
                                 Edit
-                            </router-link>
+                            </router-link> -->
+                            <a v-b-modal.modal-edit
+                               class="btn btn-warning"
+                               v-on:click="edit(role.id, index)">
+                                edit
+                            </a>
                             <a href="#"
                                class="btn btn-danger"
                                v-on:click="deleteEntry(role.id, index)">
@@ -52,7 +57,20 @@
     >
       <form @submit.stop.prevent="handleSubmit">
         <b-form-input v-model="role.name" placeholder="Enter your name"></b-form-input>
-         <b-form-input v-model="role.power" placeholder="Enter your name"></b-form-input>
+         <b-form-input v-model="role.display_name" placeholder="Enter your dis play"></b-form-input>
+      </form>
+    </b-modal>
+
+     <b-modal
+      id="modal-edit"
+      ref="myModal"
+      title="Submit your name"
+      @ok="handleOkEdit"
+      @shown="clearName"
+    >
+      <form @submit.stop.prevent="handleSubmitEdit">
+        <b-form-input v-model="editRole.name" placeholder="Enter your name"></b-form-input>
+         <b-form-input v-model="editRole.display_name" placeholder="Enter your dis play"></b-form-input>
       </form>
     </b-modal>
     </div>
@@ -65,14 +83,21 @@
                 roles: [],
                  role: {
                     name: '',
-                    power: '',
+                    display_name: '',
+                },
+                editRole :{
+                   name: '',
+                    display_name: '',
                 }
             }
         },
         mounted() {
+            console.log(this.$refs.modal);
+              console.log(this.$refs.myModal)
              this.getVueItems();
         },
         methods: {
+
             getVueItems: function getVueItems()  {
               var app = this;
                 axios.get('/role/roles')
@@ -96,12 +121,12 @@
                         });
                 }
             },
-              clearName() {
+            clearName() {
                     this.role.name = '';
-                    this.role.power = '';
+                    this.role.display_name = '';
 
               },
-                 handleOk(bvModalEvt) {
+            handleOk(bvModalEvt) {
                     // Prevent modal from closing
                     bvModalEvt.preventDefault()
                     if (!this.role.name) {
@@ -110,43 +135,75 @@
                       this.handleSubmit()
                     }
                   },  
-             handleSubmit() {
+            handleSubmit() {
                  
                 axios.post('/role/roles', {
                     name: this.role.name,
-                    power: this.role.power,
+                    display_name: this.role.display_name,
 
                 })
-                    .then(response => {
-                      // this.role.id = response.data.id; 
-                     console.log(response.data.id);
-                       this.roles.push({ name: this.role.name, power: this.role.power})
-                        // vm.$set(vm.roles, 'name', this.role.name)
-                        var app = this;
-                        axios.get('/role/roles')
-                        .then(function (resp) {
-                            app.roles = resp.data;
-                        })
-                        .catch(function (resp) {
-                            console.log(resp);
-                            alert("Could not load roles");
-                        });
+                .then(response => {
 
-                    })
-                    .catch(error => {
-                        this.errors = [];
-                        if (error.response.data.errors.title) {
-                            this.errors.push(error.response.data.errors.title[0]);
-                        }
-
-                        if (error.response.data.errors.description) {
-                            this.errors.push(error.response.data.errors.description[0]);
-                        }
-                    });
+                this.$refs.modal.hide()
+                console.log(response.data.id);
+                 // console.log(this.getVueItems());
+                this.getVueItems();
+                })
+                .catch(error => {
+                   if (error.response) {
+                     if (error.response.status) {
+                        console.log('DUPLICATE NAME')
+                     }
+                   
+                   
+                    } 
+                
+                });
                  
               },
-              
+            handleOkEdit(bvModalEvt) {
+                    // Prevent modal from closing
+                    bvModalEvt.preventDefault()
+                    if (!this.editRole.name) {
+                      alert('Please enter your name')
+                    } else {
+                      this.handleSubmitEdit()
+                    }
+                  },  
+            edit(id, index){
+
+               let app = this;
           
+            app.roleId = id;
+            axios.get('/role/roles/' + id)
+                .then(function (resp) {
+                    app.editRole = resp.data;
+                })
+                .catch(function () {
+                    alert("Could not load your editRole")
+                });
+            } ,
+          handleSubmitEdit(){
+                  event.preventDefault();
+              console.log(this.$refs.myModal);
+                var newRole = this.editRole;
+               
+                axios.patch('/role/roles/' + this.roleId, newRole)
+
+                    .then(function (response) {
+                    // this.$refs.myModal.hide()
+                        
+                      
+                       // Vue.set(this.roles, 'name', this.role.name)
+                       //  Vue.set(this.roles, 'display_name', this.role.display_name)
+
+                         // this.getVueItems();
+                    })
+
+                    .catch(function (resp) {
+                        console.log(resp);
+                    });
+          }
         }
     }
 </script>
