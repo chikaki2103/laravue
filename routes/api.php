@@ -35,3 +35,6 @@ Route::group(['middleware' => 'jwt.refresh'], function(){
 Route::group(['prefix' => '/role', 'namespace' => 'Crud', 'as' => 'api.'], function () {
     Route::resource('roles', 'RoleController', ['except' => ['create', 'edit']]);
 });
+Route::group(['prefix' => '/user', 'namespace' => 'Crud', 'as' => 'api.'], function () {
+    Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
+});

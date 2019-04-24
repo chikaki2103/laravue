@@ -87,8 +87,13 @@ export default {
       icon: 'icon-pie-chart'
     },
     {
-      name: 'role',
+      name: 'Role',
       url: '/role',
+      icon: 'icon-pie-chart'
+    },
+     {
+      name: 'User',
+      url: '/user',
       icon: 'icon-pie-chart'
     },
     {

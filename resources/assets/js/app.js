@@ -12,10 +12,12 @@ import App from './App.vue';
 // import Login from './components/Login.vue';
 import BootstrapVue from 'bootstrap-vue';
 import router from './router';
+import Toasted from 'vue-toasted';
 // Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.component('App', require('./App.vue'));
 Vue.use(BootstrapVue);
+Vue.use(Toasted);
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
 // const router1 = new VueRouter({
 //     routes: [{

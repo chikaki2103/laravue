@@ -5,7 +5,7 @@
    
 </div>
         <div class="form-group">
-              <b-button v-b-modal.modal-prevent>Launch demo modal</b-button>
+              <b-button v-b-modal.modal-prevent class="btn btn-outline-success">New Role</b-button>
         </div>
 
         <div class="panel panel-default">
@@ -33,12 +33,12 @@
                             <a v-b-modal.modal-edit
                                class="btn btn-warning"
                                v-on:click="edit(role.id, index)">
-                                edit
+                                <span class="icon-wrench"></span>
                             </a>
                             <a href="#"
                                class="btn btn-danger"
                                v-on:click="deleteEntry(role.id, index)">
-                                Delete
+                                <span class="icon-trash"></span>
                             </a>
                         </td>
                     </tr>
@@ -56,7 +56,7 @@
       @shown="clearName"
     >
       <form @submit.stop.prevent="handleSubmit">
-        <b-form-input v-model="role.name" placeholder="Enter your name"></b-form-input>
+        <b-form-input v-model="role.name" placeholder="Enter your name"></b-form-input><br>
          <b-form-input v-model="role.display_name" placeholder="Enter your dis play"></b-form-input>
       </form>
     </b-modal>
@@ -69,7 +69,7 @@
       @shown="clearName"
     >
       <form @submit.stop.prevent="handleSubmitEdit" @focus.native="handleSubmitEdit()">
-        <b-form-input v-model="editRole.name" placeholder="Enter your name"></b-form-input>
+        <b-form-input v-model="editRole.name" placeholder="Enter your name"></b-form-input><br>
          <b-form-input v-model="editRole.display_name" placeholder="Enter your dis play"></b-form-input>
       </form>
     </b-modal>
@@ -130,7 +130,14 @@
                     // Prevent modal from closing
                     bvModalEvt.preventDefault()
                     if (!this.role.name) {
-                      alert('Please enter your name')
+                      // alert('Please enter your name')
+                        this.$toasted.error('Please enter your name',{
+                                    theme: 'toasted-primary', 
+                                    iconPack: 'fontawesome',
+                                    icon: 'check',
+                                    position: 'top-right',
+                                    duration: 5000
+                                })
                     } else {
                       this.handleSubmit()
                     }
@@ -153,6 +160,13 @@
                    if (error.response) {
                      if (error.response.status) {
                         console.log('DUPLICATE NAME')
+                       this.$toasted.error('Trùng tên nha',{
+                                    theme: 'toasted-primary', 
+                                    iconPack: 'fontawesome',
+                                    icon: 'check',
+                                    position: 'top-right',
+                                    duration: 5000
+                                })
                      }
                    
                    

@@ -32,6 +32,7 @@
         "font-awesome": "^4.7.0",
         "simple-line-icons": "^2.4.1",
         "vue-chartjs": "2.8.1",
-        "vue-strap": "github:wffranco/vue-strap"
+        "vue-strap": "github:wffranco/vue-strap",
+        "vue-toasted": "^1.1.26"
     }
 }

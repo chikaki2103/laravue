@@ -35,6 +35,8 @@ import Register from '@/views/pages/Register'
 import RoleIndex from '@/components/roles/RoleIndex';
 import RoleCreate from '@/components/roles/RoleCreate';
 import RoleEdit from '@/components/roles/RoleEdit';
+import UserIndex from '@/components/users/UserIndex';
+
 Vue.use(Router)
 
 export default new Router({
@@ -69,6 +71,11 @@ export default new Router({
       path:'/role',
       component: RoleIndex
 
+       },
+        {
+        name:'user',
+        path:'/user',
+        component: UserIndex
        },
       // {
       //     path: '/',
