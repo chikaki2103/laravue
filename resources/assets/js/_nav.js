@@ -89,12 +89,12 @@ export default {
     {
       name: 'Role',
       url: '/role',
-      icon: 'icon-pie-chart'
+      icon: 'icon-layers'
     },
      {
       name: 'User',
       url: '/user',
-      icon: 'icon-pie-chart'
+      icon: 'icon-people'
     },
     {
       divider: true

@@ -29,8 +29,10 @@ import SimpleLineIcons from '@/views/icons/SimpleLineIcons'
 import Page404 from '@/views/pages/Page404'
 import Page500 from '@/views/pages/Page500'
 import Login from '@/containers/Login'
-import resetpassword from '@/containers/ResetPassword'
+import ForgotPasword from '@/containers/ForgotPasword'
+import ResetPassword from '@/containers/ResetPassword.vue'
 import Register from '@/views/pages/Register'
+import InvalidToken from '@/views/pages/InvalidToken.vue'
 //roles
 import RoleIndex from '@/components/roles/RoleIndex';
 import RoleCreate from '@/components/roles/RoleCreate';
@@ -172,6 +174,15 @@ export default new Router({
           component: Page500
         },
         {
+          path: '/invalid-token',
+          name: 'InvalidToken',
+          component: InvalidToken,
+          meta: {
+            auth: false
+          }
+        },
+
+        {
           path: 'login',
           name: 'Login',
           component: Login
@@ -192,24 +203,34 @@ export default new Router({
         }
     },
      {
-      path: '/resetpassword',
-      name: 'resetpassword',
-      component: resetpassword,
-       meta: {
-            auth: false
-        }
+      path: '/forgot-password',
+      name: 'ForgotPassword',
+      component: ForgotPasword,
+      meta: {
+        auth: false
+      }
     },
-     {
-      name: 'FormMail',
-      path: '/email/form',
-      component: FormMail
-  },
-  {
-      name:'SuccessMail',
-      path:'/email/success',
-      component: SuccessMail
 
-  }
+  //    {
+  //     name: 'FormMail',
+  //     path: '/email/form',
+  //     component: FormMail
+  // },
+  // {
+  //     name:'SuccessMail',
+  //     path:'/email/success',
+  //     component: SuccessMail
+
+  // },
+  {
+      path: '/reset-password/:token',
+      name: 'ResetPassword',
+      component: ResetPassword,
+      meta: {
+        auth: false
+      }
+    }
+
  
   ]
 })

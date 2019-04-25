@@ -109,7 +109,7 @@ export default {
         });
     },
      reset() {
-      this.$router.push('resetpassword');
+      this.$router.push('forgot-password');
     }
   }
 }

@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div class="animated fadeIn">
     <div>
       <!-- Using modifiers -->
 
     </div>
     <div class="form-group">
-      <b-button v-b-modal.modal-prevent class="btn btn-outline-success">New Role</b-button>
+      <b-button v-b-modal.modal-prevent class="btn btn-success"><span class="icon-user-follow"></span></b-button>
     </div>
 
     <div class="panel panel-default">
-      <div class="panel-heading">Role list</div>
+      <div class="panel-heading">User list</div>
       <div class="panel-body">
         <table class="table table-bordered table-striped">
           <thead>
@@ -33,12 +33,12 @@
                               <a v-b-modal.modal-edit
                               class="btn btn-warning"
                               v-on:click="edit(user.id, index)">
-                              <span class="icon-wrench"></span>
+                              <span class="icon-pencil"></span>
                             </a>
                             <a href="#"
                             class="btn btn-danger"
                             v-on:click="deleteEntry(user.id, index)">
-                            <span class="icon-trash"></span>
+                            <span class="icon-user-unfollow"></span>
                           </a>
                         </td>
                       </tr>
@@ -195,9 +195,9 @@
                     .then(response => {
 
                       this.$refs.modal.hide()
-                      console.log(response.data.id);
+                      // console.log(response.data.id);
                  // console.log(this.getVueItems());
-                      this.getVueItems();
+                 this.getVueItems();
 
                })
                     .catch(error => {
@@ -250,30 +250,30 @@
 
                   event.preventDefault();
               // console.log(this.$refs.myModal);
-                console.log(this.$refs['myModal'].hide());
-                this.$refs['myModal'].hide();
-                var newRole = this.editUser;
+              console.log(this.$refs['myModal'].hide());
+              this.$refs['myModal'].hide();
+              var newRole = this.editUser;
 
-                axios.patch('/user/users/' + this.roleId, newRole)
+              axios.patch('/user/users/' + this.roleId, newRole)
 
-                .then(response => {
+              .then(response => {
 
                 this.$refs.myModal.hide()
                 console.log(response.data.id);
                  // console.log(this.getVueItems());
                  this.getVueItems();
                })
-                .catch(error => {
-                 if (error.response) {
-                   if (error.response.status) {
-                    console.log('DUPLICATE NAME')
-                  }
+              .catch(error => {
+               if (error.response) {
+                 if (error.response.status) {
+                  console.log('DUPLICATE NAME')
+                }
 
 
-                } 
+              } 
 
-              });
-              }
+            });
             }
           }
+        }
         </script>
