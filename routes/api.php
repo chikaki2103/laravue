@@ -38,3 +38,6 @@ Route::group(['prefix' => '/role', 'namespace' => 'Crud', 'as' => 'api.'], funct
 Route::group(['prefix' => '/user', 'namespace' => 'Crud', 'as' => 'api.'], function () {
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
 });
+Route::group(['prefix' => '/permission', 'namespace' => 'Crud', 'as' => 'api.'], function () {
+    Route::resource('permissions', 'PermissionController', ['except' => ['create', 'edit']]);
+});

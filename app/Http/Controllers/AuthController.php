@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\Role;
+use App\User_Role;
 use App\Http\Requests\RegisterFormRequest;
 use Illuminate\Http\Request;
 use JWTAuth;
@@ -23,6 +25,7 @@ class AuthController extends Controller
  public function login(Request $request)
 {
     $credentials = $request->only('email', 'password');
+    $user = User::with('roles')->where('email',$request->email)->first();
     if ( ! $token = JWTAuth::attempt($credentials)) {
             return response([
                 'status' => 'error',
@@ -31,16 +34,19 @@ class AuthController extends Controller
             ], 400);
     }
     return response([
-            'status' => 'success'
+            'status' => 'success',
+            'user' => $user,
         ])
         ->header('Authorization', $token);
 }
 public function user(Request $request)
 {
-    $user = User::find(Auth::user()->id);
+    // $user = User::find(Auth::user()->id);
+     $user = User::with('roles')->where('id',Auth::user()->id)->first();
     return response([
             'status' => 'success',
             'data' => $user
+
         ]);
 }
 public function refresh()

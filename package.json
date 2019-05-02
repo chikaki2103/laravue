@@ -26,6 +26,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@casl/ability": "^3.0.2",
+        "@casl/vue": "^0.5.1",
         "@websanova/vue-auth": "^2.21.14-beta",
         "bootstrap-vue": "^2.0.0-rc.18",
         "chart.js": "2.6.0",
@@ -33,6 +35,9 @@
         "simple-line-icons": "^2.4.1",
         "vue-chartjs": "2.8.1",
         "vue-strap": "github:wffranco/vue-strap",
-        "vue-toasted": "^1.1.26"
+        "vue-swal": "^1.0.0",
+        "vue-tables-2": "^1.4.70",
+        "vue-toasted": "^1.1.26",
+        "vuetable-2": "^2.0.0-beta.4"
     }
 }

@@ -38,9 +38,13 @@ import RoleIndex from '@/components/roles/RoleIndex';
 import RoleCreate from '@/components/roles/RoleCreate';
 import RoleEdit from '@/components/roles/RoleEdit';
 import UserIndex from '@/components/users/UserIndex';
-
+import PermissionIndex from '@/components/permissions/PermissionIndex';
 Vue.use(Router)
 
+// router.beforeEach(async (to, from, next)=>{
+//   let rules = combileRulesOf(roles);
+//   ability.update(rules); 
+// })
 export default new Router({
   mode: 'hash', // Demo is living in GitHub.io, so required!
   linkActiveClass: 'open active',
@@ -78,6 +82,11 @@ export default new Router({
         name:'user',
         path:'/user',
         component: UserIndex
+       },
+        {
+        name:'permission',
+        path:'/permission',
+        component: PermissionIndex
        },
       // {
       //     path: '/',
@@ -178,6 +187,7 @@ export default new Router({
           name: 'InvalidToken',
           component: InvalidToken,
           meta: {
+
             auth: false
           }
         },

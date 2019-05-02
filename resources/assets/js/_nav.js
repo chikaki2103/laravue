@@ -96,6 +96,11 @@ export default {
       url: '/user',
       icon: 'icon-people'
     },
+     {
+      name: 'Permisson',
+      url: '/permission',
+      icon: 'icon-people'
+    },
     {
       divider: true
     },

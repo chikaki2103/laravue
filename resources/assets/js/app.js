@@ -13,12 +13,28 @@ import App from './App.vue';
 import BootstrapVue from 'bootstrap-vue';
 import router from './router';
 import Toasted from 'vue-toasted';
-// Vue.use(VueRouter);
+import VueSwal from 'vue-swal';
+import {ServerTable, ClientTable, Event} from 'vue-tables-2';
+import ability from './config/ability'
+import { abilitiesPlugin } from 'casl/vue'
+import { Can } from 'casl/vue'
+import defineAbilitiesFor  from './config/ability'
+window.ability = ability
 Vue.use(VueAxios, axios);
 Vue.component('App', require('./App.vue'));
+Vue.component('Can', Can)
 Vue.use(BootstrapVue);
 Vue.use(Toasted);
+Vue.use(VueSwal);
+Vue.use(ServerTable);
+Vue.use(abilitiesPlugin);
+
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
+console.log(ability.update(ability.rules))
+// ability.on('update', ({ rules, ability }) => {
+ 
+// })
+// ability.update(defineRulesFor)
 // const router1 = new VueRouter({
 //     routes: [{
 //         path: '/',

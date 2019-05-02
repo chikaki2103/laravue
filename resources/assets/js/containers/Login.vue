@@ -99,11 +99,30 @@ export default {
           redirect: {
             name: 'Dashboard'
           },
-          fetchUser: true
+          fetchUser: true,
+          
         })
-        .then(() => {
-          console.log('success ' + this.context);
-        }, (res) => {
+        .then((res) => {
+          // console.log('success ' + this.context);
+          // var user = this.$auth.user(); 
+          //  user = res.data.user;
+          // console.log(res.data.user.roles[0].name);
+          // console.log(this.$auth.user(res.data.user).roles);
+          // console.log(this.$auth.check(res.data.user.roles.name));
+          // ability.update(defineRulesFor(res.user));
+          // ability.update(defineRulesFor(res.user));
+        
+          // ability.update(res.data.user.roles[0].name);
+          // console.log(res.data.user)
+          var user = res.data.user;
+          localStorage.setItem("user",  JSON.stringify(user));
+          var users = JSON.parse(localStorage.getItem("user"));
+          // var userItem = JSON.parse(localStorage.getItem(item))
+          // console.log(users);
+          console.log(ability.rules);
+          
+
+        },(res) => {
           console.log('error ' + this.context);
           this.errors = res.data;
         });
