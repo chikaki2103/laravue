@@ -39,6 +39,8 @@ import RoleCreate from '@/components/roles/RoleCreate';
 import RoleEdit from '@/components/roles/RoleEdit';
 import UserIndex from '@/components/users/UserIndex';
 import PermissionIndex from '@/components/permissions/PermissionIndex';
+import defineRulesFor from '@/config/ability'
+
 Vue.use(Router)
 
 // router.beforeEach(async (to, from, next)=>{
@@ -60,7 +62,15 @@ export default new Router({
         {
           path: 'dashboard',
           name: 'Dashboard',
-          component: Dashboard
+          component: Dashboard,
+          beforeEnter: (to, from, next) => {
+          var role = JSON.parse(localStorage.getItem("role"));
+          var permission = JSON.parse(localStorage.getItem("permissions"));
+
+           var ability = defineRulesFor(role,permission);
+           console.log(ability.rules[0])
+           next();
+          }
         },
         {
           path: 'charts',

@@ -7,7 +7,7 @@
          <div class="card p-4">
            <form v-on:submit.prevent="sendEmail()" novalidate="true">
              <div class="card-body">
-               <h1>Recover Password</h1>
+               <h2>Forgot Password</h2>
                <p class="text-muted">Enter your email</p>
                <div class="input-group mb-3">
                  <span class="input-group-addon"><i class="icon-user"></i></span>

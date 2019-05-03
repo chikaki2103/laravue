@@ -63,25 +63,23 @@ export default {
   },
   methods: {
     checkForm: function() {
-      this.errors = [];
+            this.errors = [];
+            if (!this.email) {
+                this.errors.push('Email required.');
+            } else if (!this.validEmail(this.email)) {
+                this.errors.push('Valid email required.');
+            }
+            if (!this.password) {
+                this.errors.push('Password required.');
+            } else if (!this.validPass(this.password)) {
+                this.errors.push('Valid password required.');
+            }
+            if (!this.errors.length) {
+                return true;
+            }
+            return false;
+        },
 
-      if (!this.email) {
-        this.errors.push('Email required.');
-      } else if (!this.validEmail(this.email)) {
-        this.errors.push('Valid email required.');
-      }
-
-       if (!this.password) {
-       this.errors.push('Password required.');
-       } else if (!this.validPass(this.password)) {
-         this.errors.push('Valid password required.');
-       }
-
-      if (!this.errors.length) {
-        return true;
-      }
-      return false;
-    },
     validPass: function(password){
      var pass=  /^[A-Za-z0-9]\w{3,15}$/;
      return pass.test(password);
@@ -112,20 +110,29 @@ export default {
           // ability.update(defineRulesFor(res.user));
           // ability.update(defineRulesFor(res.user));
         
-          // ability.update(res.data.user.roles[0].name);
-          // console.log(res.data.user)
+        
+          console.log(res.data);
           var user = res.data.user;
-          localStorage.setItem("user",  JSON.stringify(user));
+
+          localStorage.setItem("user",  JSON.stringify(user)); 
+          localStorage.setItem("role",  JSON.stringify(res.data.roles));
+          localStorage.setItem("permissions",  JSON.stringify(res.data.permissions));
           var users = JSON.parse(localStorage.getItem("user"));
+          console.log(localStorage)
           // var userItem = JSON.parse(localStorage.getItem(item))
           // console.log(users);
-          console.log(ability.rules);
-          
-
-        },(res) => {
-          console.log('error ' + this.context);
-          this.errors = res.data;
-        });
+          // var rule = ability.rules;
+          // localStorage.setItem("rule",  JSON.stringify(rule));
+          // var rules = JSON.parse(localStorage.getItem("rule"));
+          // ability.update(rules);
+          // this.$router.go()
+          // console.log(this.$ability.rules);
+          // location.reload();
+         
+       }).catch(error => {
+       console.log(error.response.data.status)
+      });
+       
     },
      reset() {
       this.$router.push('forgot-password');

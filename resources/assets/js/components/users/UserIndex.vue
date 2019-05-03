@@ -128,7 +128,7 @@ export default {
             }).then(confirmed => {
                 if (confirmed) {
                   // console.log(ability.can('delete'));
-                  if (ability.can('delete','all')) {
+                  if (this.$ability.can('delete','all')) {
                     axios
                         .delete("/user/users/" + id)
                         .then(response => {

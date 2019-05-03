@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 use App\User;
 use App\Role;
+use App\Permission;
 use App\User_Role;
 use App\Http\Requests\RegisterFormRequest;
 use Illuminate\Http\Request;
 use JWTAuth;
 use Auth;
+use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     public function register(Request $request)
@@ -25,8 +27,34 @@ class AuthController extends Controller
  public function login(Request $request)
 {
     $credentials = $request->only('email', 'password');
+
     $user = User::with('roles')->where('email',$request->email)->first();
-    if ( ! $token = JWTAuth::attempt($credentials)) {
+
+    if (($request->email = $user)==null ) {
+            return response([
+                'status' => 'sai email',
+            ], 400);
+    }else if (!Hash::check($request->password,$user->password)){
+        return response([
+                'status' => 'sai password',
+            ], 400);
+    }
+ 
+    $role_permission = [];
+       foreach( $user->roles as $key => $value){
+           $role_permission[] = $value->id;
+           $role_name[] = $value->name;
+       }
+
+    $roles = Role::with('permissions')->whereIn('id',$role_permission)->get();
+
+    $permissions = [];
+    foreach ($roles as $role) {
+        foreach ($role->permissions as $key => $value) {
+          $permissions[]= $value->name;
+        }
+    }
+   if ( ! $token = JWTAuth::attempt($credentials)) {
             return response([
                 'status' => 'error',
                 'error' => 'invalid.credentials',
@@ -36,6 +64,12 @@ class AuthController extends Controller
     return response([
             'status' => 'success',
             'user' => $user,
+            'roles' =>$role_name,
+            'permissions' => $permissions,
+            
+           
+         
+            
         ])
         ->header('Authorization', $token);
 }
@@ -60,5 +94,15 @@ public function logout()
             'status' => 'success',
             'msg' => 'Logged out Successfully.'
         ], 200);
+}
+public function userLogin(Request $request){
+    dd($request->email);
+     // $credentials = $request->only('email', 'password');
+        $user = User::where('email' ,$request->email)->first();
+        // $token = auth()->attempt($credentials);
+
+   return response([
+            'user' =>  $user, 
+        ]);
 }
 }

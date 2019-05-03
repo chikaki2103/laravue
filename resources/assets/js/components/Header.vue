@@ -65,7 +65,9 @@ export default {
       this.$auth.logout();
       
       this.$router.push('login');
-      ability.update([])
+      // ability.update([])
+      // localStorage.clear();
+      
     }
   }
 }
